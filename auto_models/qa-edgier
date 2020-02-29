@@ -1,1 +1,46 @@
-Y29ubmVjdGlvbjogIiAIcWEtZWRnaWVyIgoKaW5jbHVkZTogIi92aWV3cy8qKi8qLnZpZXciICAgICAgICAgICAgICAgICAgICMgaW5jbHVkZSBhbGwgdmlld3MgaW4gdGhpcyBwcm9qZWN0CiMgaW5jbHVkZTogIm15X2Rhc2hib2FyZC5kYXNoYm9hcmQubG9va21sIiAgICMgaW5jbHVkZSBhIExvb2tNTCBkYXNoYm9hcmQgY2FsbGVkIG15X2Rhc2hib2FyZAoKIyMjIyMgRXhwbG9yZXMgIyMjIyMKCgpleHBsb3JlOiBhcGlfZGVsaXZlcnkgewogIGxhYmVsOiAiRGVsaXZlcnkgJiBSb2JvdCIKIyAgIGFjY2Vzc19maWx0ZXI6IHsKIyAgICAgZmllbGQ6IGFwaV9yb2JvdC5uYW1lCiMgICAgIHVzZXJfYXR0cmlidXRlOiByb2JvdF9uYW1lCiMgICB9CiAgam9pbjogYXBpX3JvYm90IHsKICAgIHJlbGF0aW9uc2hpcDogbWFueV90b19vbmUKICAgIHNxbF9vbjogJHthcGlfZGVsaXZlcnkucm9ib3R9ID0gJHthcGlfcm9ib3QubmFtZX0gOzsKICAgIHR5cGU6IGxlZnRfb3V0ZXIKICB9Cn0KCmV4cGxvcmU6IGFwaV9yb2JvdCB7CiAgbGFiZWw6ICJSb2JvdCIKfQoKIyMjIyMgUGVybWlzc2lvbnMgICMjIyMjCgojIGFjY2Vzc19ncmFudDogY2FuX3NlZV9zZW5zaXRpdmVfZGF0YSB7CiMgICBhbGxvd2VkX3ZhbHVlczogWyJmaW5hbmNlIl0KIyAgIHVzZXJfYXR0cmlidXRlOiBkZXBhcnRtZW50CiMgfQoKIyAjIFNlbGVjdCB0aGUgdmlld3MgdGhhdCBzaG91bGQgYmUgYSBwYXJ0IG9mIHRoaXMgbW9kZWwsCiMgIyBhbmQgZGVmaW5lIHRoZSBqb2lucyB0aGF0IGNvbm5lY3QgdGhlbSB0b2dldGhlci4KIwojIGV4cGxvcmU6IG9yZGVyX2l0ZW1zIHsKIyAgIGpvaW46IG9yZGVycyB7CiMgICAgIHJlbGF0aW9uc2hpcDogbWFueV90b19vbmUKIyAgICAgc3FsX29uOiAke29yZGVycy5pZH0gPSAke29yZGVyX2l0ZW1zLm9yZGVyX2lkfSA7OwojICAgfQojCiMgICBqb2luOiB1c2VycyB7CiMgICAgIHJlbGF0aW9uc2hpcDogbWFueV90b19vbmUKIyAgICAgc3FsX29uOiAke3VzZXJzLmlkfSA9ICR7b3JkZXJzLnVzZXJfaWR9IDs7CiMgICB9CiMgfQo=
+connection: " qa-edgier"
+
+include: "/views/**/*.view"                   # include all views in this project
+# include: "my_dashboard.dashboard.lookml"   # include a LookML dashboard called my_dashboard
+
+##### Explores #####
+
+
+explore: api_delivery {
+  label: "Delivery & Robot"
+#   access_filter: {
+#     field: api_robot.name
+#     user_attribute: robot_name
+#   }
+  join: api_robot {
+    relationship: many_to_one
+    sql_on: ${api_delivery.robot} = ${api_robot.name} ;;
+    type: left_outer
+  }
+}
+
+explore: api_robot {
+  label: "Robot"
+}
+
+##### Permissions  #####
+
+# access_grant: can_see_sensitive_data {
+#   allowed_values: ["finance"]
+#   user_attribute: department
+# }
+
+# # Select the views that should be a part of this model,
+# # and define the joins that connect them together.
+#
+# explore: order_items {
+#   join: orders {
+#     relationship: many_to_one
+#     sql_on: ${orders.id} = ${order_items.order_id} ;;
+#   }
+#
+#   join: users {
+#     relationship: many_to_one
+#     sql_on: ${users.id} = ${orders.user_id} ;;
+#   }
+# }
